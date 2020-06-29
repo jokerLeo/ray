@@ -41,6 +41,8 @@
         <freemarker.version>2.3.28</freemarker.version>
         <dubbo.starter.version>2.0.0</dubbo.starter.version>
         <zkclient.version>0.10</zkclient.version>
+        <druid.version>1.1.10</druid.version>
+        <mybatisplus.dynamic.version>3.1.0</mybatisplus.dynamic.version>
     </properties>
 
     <dependencyManagement>
@@ -56,6 +58,11 @@
                 <groupId>com.alibaba.spring.boot</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>${dubbo.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.yaml</groupId>
@@ -104,6 +111,11 @@
                 <version>${zkclient.version}</version>
             </dependency>
             <!-- mybatis plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${mybatisplus.dynamic.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>

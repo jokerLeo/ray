@@ -3,4 +3,4 @@ generator:
     driver: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.125.161:36001/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
     username: root
-    password: 123456
+    password: jEhi6SfY38B7rIB9wrFZ1w==

@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.mrray.ray.common.AESUtil;
 import com.mrray.ray.common.YmlUtils;
 
 import java.util.ArrayList;
@@ -56,7 +57,8 @@ public class CodeGenerator {
         dsc.setUrl(URL);
         dsc.setDriverName(DRIVER);
         dsc.setUsername(USERNAME);
-        dsc.setPassword(PASSWORD);
+        String encKey = System.getProperty("enc.key");
+        dsc.setPassword(AESUtil.decode(PASSWORD, encKey));
         mpg.setDataSource(dsc);
         final PackageConfig pc = new PackageConfig();
         String modelName = scanner("模块名").trim();

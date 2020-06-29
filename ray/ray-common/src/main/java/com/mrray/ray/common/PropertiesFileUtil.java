@@ -34,7 +34,7 @@ public class PropertiesFileUtil {
         return getInstance(NAME);
     }
 
-    public static synchronized PropertiesFileUtil getInstance(String name) {
+    private static synchronized PropertiesFileUtil getInstance(String name) {
         PropertiesFileUtil conf = configMap.get(name);
         if (null == conf) {
             conf = new PropertiesFileUtil(name);
@@ -81,7 +81,7 @@ public class PropertiesFileUtil {
         }
     }
 
-    public Date getLoadTime() {
+    private Date getLoadTime() {
         return loadTime;
     }
 
