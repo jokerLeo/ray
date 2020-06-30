@@ -28,12 +28,17 @@ spring:
     dynamic:
       datasource:
         master:
-          url: jdbc:mysql://192.168.125.161:36001/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
+          url: jdbc:mysql://192.168.125.161:36005/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
           username: root
           password: enc:jEhi6SfY38B7rIB9wrFZ1w==
           driver-class-name: com.mysql.cj.jdbc.Driver
         slave_1:
-          url: jdbc:mysql://192.168.125.161:36003/iflow-slave1?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
+          url: jdbc:mysql://192.168.125.161:36006/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
+          username: root
+          password: enc:jEhi6SfY38B7rIB9wrFZ1w==
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        slave_2:
+          url: jdbc:mysql://192.168.125.161:36007/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
           username: root
           password: enc:jEhi6SfY38B7rIB9wrFZ1w==
           driver-class-name: com.mysql.cj.jdbc.Driver

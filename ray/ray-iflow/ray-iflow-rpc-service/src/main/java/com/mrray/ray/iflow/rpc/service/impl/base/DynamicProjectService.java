@@ -22,7 +22,19 @@ public class DynamicProjectService {
     }
 
     @DS("slave_1")
+    public boolean updateSlave1FlowName(String name) {
+        Flow flow = flowService.getById(1L);
+        flow.setName(name);
+        return flowService.updateById(flow);
+    }
+
+    @DS("slave_1")
     public Flow getByIdFromSlave1(Long id) {
+        return flowService.getById(id);
+    }
+
+    @DS("slave_2")
+    public Flow getByIdFromSlave2(Long id) {
         return flowService.getById(id);
     }
 } 

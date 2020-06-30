@@ -36,4 +36,13 @@ public class FlowMapperTest {
                         .setNodeCount(5)
         );
     }
+
+    /**
+     * 测试读写分离
+     */
+    @Test
+    public void testReadWrite() {
+        Flow flow = flowService.getById(1L);
+        boolean isSuccess = flowService.save(new Flow().setName("测试读写分离"));
+    }
 } 

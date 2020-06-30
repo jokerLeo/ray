@@ -42,10 +42,28 @@ public class DynamicDbTest {
     }
 
     @Test
-    public void testDynamicDb() {
-        Flow flowMaster = dynamicProjectService.getByIdFromMaster(1L);
-        log.info("master flow name: {}", flowMaster.getName());
+    public void testUpdateMaster() {
+        log.info("测试主从");
+        log.info("更新master");
+        Flow flow = flowService.getById(1L);
+        flow.setName("更新从库");
+        boolean success = flowService.updateById(flow);
+        log.info("master flow name: {}", dynamicProjectService.getByIdFromMaster(1L).getName());
         Flow flowSlave1 = dynamicProjectService.getByIdFromSlave1(1L);
         log.info("slave1 flow name: {}", flowSlave1.getName());
+        Flow flowSlave2 = dynamicProjectService.getByIdFromSlave1(1L);
+        log.info("slave2 flow name: {}", flowSlave2.getName());
+    }
+
+    @Test
+    public void testUpdateSlave() {
+        log.info("测试主从");
+        log.info("更新slave1");
+        boolean success = dynamicProjectService.updateSlave1FlowName("slave1");
+        log.info("master flow name: {}", dynamicProjectService.getByIdFromMaster(1L).getName());
+        Flow flowSlave1 = dynamicProjectService.getByIdFromSlave1(1L);
+        log.info("slave1 flow name: {}", flowSlave1.getName());
+        Flow flowSlave2 = dynamicProjectService.getByIdFromSlave1(1L);
+        log.info("slave2 flow name: {}", flowSlave2.getName());
     }
 } 
