@@ -8,6 +8,7 @@
 - 1.一键生成entity,dao,service,serviceImpl,controller,同时service满足dubbo配置，可供其他项目调用
 - 2.基于docker-compose的mysql主从一键化搭建
 - 3.自定义yml文件对称加密
+- 4.基于sharding-jdbc-spring-boot-starter的读写分离
 
 
 #### 安装教程
