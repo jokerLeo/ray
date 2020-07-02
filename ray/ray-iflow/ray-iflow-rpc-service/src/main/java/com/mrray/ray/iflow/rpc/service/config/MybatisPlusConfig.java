@@ -1,6 +1,5 @@
 package com.mrray.ray.iflow.rpc.service.config;
 
-import com.baomidou.dynamic.datasource.plugin.MasterSlaveAutoRoutingPlugin;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
@@ -18,10 +17,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan("com.mrray.ray.iflow.dao.base.mapper")
 public class MybatisPlusConfig {
-    @Bean
-    public MasterSlaveAutoRoutingPlugin masterSlaveAutoRoutingPlugin() {
-        return new MasterSlaveAutoRoutingPlugin();
-    }
 
     /**
      * 配置属性自动填充

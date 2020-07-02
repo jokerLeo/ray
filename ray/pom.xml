@@ -41,7 +41,7 @@
         <freemarker.version>2.3.28</freemarker.version>
         <dubbo.starter.version>2.0.0</dubbo.starter.version>
         <zkclient.version>0.10</zkclient.version>
-        <druid.version>1.1.10</druid.version>
+        <druid.starter.version>1.1.9</druid.starter.version>
         <mybatisplus.dynamic.version>3.1.0</mybatisplus.dynamic.version>
         <shardingsphere.version>3.1.0</shardingsphere.version>
     </properties>
@@ -63,7 +63,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
+                <version>${druid.starter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.yaml</groupId>

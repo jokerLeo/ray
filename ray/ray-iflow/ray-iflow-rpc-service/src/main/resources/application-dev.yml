@@ -25,23 +25,6 @@ spring:
         login-username: admin
         # 登录密码
         login-password: 123456
-    dynamic:
-      datasource:
-        master:
-          url: jdbc:mysql://192.168.125.161:36005/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
-          username: root
-          password: enc:jEhi6SfY38B7rIB9wrFZ1w==
-          driver-class-name: com.mysql.cj.jdbc.Driver
-        slave_1:
-          url: jdbc:mysql://192.168.125.161:36006/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
-          username: root
-          password: enc:jEhi6SfY38B7rIB9wrFZ1w==
-          driver-class-name: com.mysql.cj.jdbc.Driver
-        slave_2:
-          url: jdbc:mysql://192.168.125.161:36007/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
-          username: root
-          password: enc:jEhi6SfY38B7rIB9wrFZ1w==
-          driver-class-name: com.mysql.cj.jdbc.Driver
   dubbo:
     application:
       name: ray-iflow-rpc-service
@@ -51,18 +34,45 @@ spring:
       name: dubbo
       port: 20881
       status: server
+sharding:
+  jdbc:
+    dataSource:
+      names: master0,master0-slave1,master0-slave2
+      # 配置主库
+      master0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://192.168.125.161:36005/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
+        username: root
+        password: enc:jEhi6SfY38B7rIB9wrFZ1w==
+        driver-class-name: com.mysql.cj.jdbc.Driver
+      master0-slave1: # 配置第一个从库
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://192.168.125.161:36006/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
+        username: root
+        password: enc:jEhi6SfY38B7rIB9wrFZ1w==
+        driver-class-name: com.mysql.cj.jdbc.Driver
+      master0-slave2: # 配置第二个从库
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://192.168.125.161:36007/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
+        username: root
+        password: enc:jEhi6SfY38B7rIB9wrFZ1w==
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    config:
+      masterslave: # 配置读写分离
+        load-balance-algorithm-type: round_robin # 配置从库选择策略，提供轮询与随机，这里选择用轮询//random 随机 //round_robin 轮询
+        name: db1s2
+        master-data-source-name: master0
+        slave-data-source-names: master0-slave1,master0-slave2
 
 server:
   tomcat:
     uri-encoding: UTF-8
   port: 8085
 
-# 配置參考https://mp.baomidou.com/config/
 mybatis-plus:
+  datasource: dataSource
   mapper-locations: classpath*:/mappers/**/**Mapper.xml
   typeAliasesPackage: com.mrray.ray.iflow.dao.base.model
-  #typeEnumsPackage: cn.mrray.raybaas.dataflow.core.enums,cn.mrray.raybaas.dataflow.model.bank.entity.enums
   configuration:
-    map-underscore-to-camel-case: true
     cache-enabled: false
 
