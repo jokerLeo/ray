@@ -45,6 +45,12 @@ public class MyShardingConfig implements EnvironmentAware {
         this.propMapProperties = propMapProperties;
     }
 
+    /**
+     * 只是自定义了一个DataSource而已...
+     *
+     * @return
+     * @throws SQLException
+     */
     @Bean("shardingDataSource")
     @Primary
     public DataSource dataSource() throws SQLException {

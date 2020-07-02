@@ -21,9 +21,7 @@ spring:
         deny: 192.168.125.38
         #  禁用HTML页面上的“Reset All”功能
         reset-enable: false
-        # 登录名
         login-username: admin
-        # 登录密码
         login-password: 123456
   dubbo:
     application:
@@ -37,32 +35,68 @@ spring:
 sharding:
   jdbc:
     dataSource:
-      names: master0,master0-slave1,master0-slave2
-      # 配置主库
+      names: master0,master1,master0-slave1,master0-slave2,master1-slave1
       master0:
         type: com.alibaba.druid.pool.DruidDataSource
         url: jdbc:mysql://192.168.125.161:36005/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
         username: root
         password: enc:jEhi6SfY38B7rIB9wrFZ1w==
         driver-class-name: com.mysql.cj.jdbc.Driver
-      master0-slave1: # 配置第一个从库
+      master0-slave1:
         type: com.alibaba.druid.pool.DruidDataSource
         url: jdbc:mysql://192.168.125.161:36006/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
         username: root
         password: enc:jEhi6SfY38B7rIB9wrFZ1w==
         driver-class-name: com.mysql.cj.jdbc.Driver
-      master0-slave2: # 配置第二个从库
+      master0-slave2:
         type: com.alibaba.druid.pool.DruidDataSource
         url: jdbc:mysql://192.168.125.161:36007/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
         username: root
         password: enc:jEhi6SfY38B7rIB9wrFZ1w==
         driver-class-name: com.mysql.cj.jdbc.Driver
+      master1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://192.168.125.161:36008/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
+        username: root
+        password: enc:jEhi6SfY38B7rIB9wrFZ1w==
+        driver-class-name: com.mysql.cj.jdbc.Driver
+      master1-slave1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://192.168.125.161:36009/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
+        username: root
+        password: enc:jEhi6SfY38B7rIB9wrFZ1w==
+        driver-class-name: com.mysql.cj.jdbc.Driver
     config:
-      masterslave: # 配置读写分离
-        load-balance-algorithm-type: round_robin # 配置从库选择策略，提供轮询与随机，这里选择用轮询//random 随机 //round_robin 轮询
-        name: db1s2
-        master-data-source-name: master0
-        slave-data-source-names: master0-slave1,master0-slave2
+      # 分库分表
+      sharding:
+        tables:
+          operation:
+            #此处有坑，如果未配置主从则用此配置
+            #actual-data-nodes: master$->{0..1}.operation_$->{0..1}
+            #配置主从
+            actual-data-nodes: master_$->{0..1}.operation_$->{0..1}
+            database-strategy:
+              inline:
+                sharding-column: assess_status
+                algorithm-expression: master$->{assess_status%2}
+            table-strategy:
+              inline:
+                sharding-column: id
+                algorithm-expression: operation_$->{id % 2}
+            key-generator-column-name: id
+            key-generator-class-name: com.mrray.ray.common.sharding.SnowflakeShardingKeyGenerator
+        master-slave-rules:
+          master_0:
+            name: m02s
+            master-data-source-name: master0
+            slave-data-source-names: master0-slave1,master0-slave2
+          master_1:
+            name: m1
+            master-data-source-name: master1
+            slave-data-source-names: master1-slave1
+    props:
+      sql:
+        show: true
 
 server:
   tomcat:

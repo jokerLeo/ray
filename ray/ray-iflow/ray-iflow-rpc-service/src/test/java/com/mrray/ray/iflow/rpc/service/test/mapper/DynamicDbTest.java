@@ -1,7 +1,9 @@
 package com.mrray.ray.iflow.rpc.service.test.mapper;
 
 import com.mrray.ray.iflow.dao.base.model.Flow;
+import com.mrray.ray.iflow.dao.base.model.Operation;
 import com.mrray.ray.iflow.rpc.api.base.IFlowService;
+import com.mrray.ray.iflow.rpc.api.base.IOperationService;
 import com.mrray.ray.iflow.rpc.service.IFlowRpcServiceApplication;
 import com.mrray.ray.iflow.rpc.service.impl.base.DynamicProjectServiceFromMybatisPlus;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class DynamicDbTest {
     @Autowired
     private IFlowService flowService;
+    @Autowired
+    private IOperationService operationService;
 
     @Autowired
     private DynamicProjectServiceFromMybatisPlus dynamicProjectServiceFromMybatisPlus;
@@ -43,9 +47,16 @@ public class DynamicDbTest {
 
     @Test
     public void testReadWriteSeparate() {
-        Flow flow = flowService.getById(1L);
-        flow.setName("测试读写分离");
-        boolean success = flowService.updateById(flow);
+        Operation operation1 = operationService.getById(1278722780161916929L);
+        Operation operation2 = operationService.getById(1278722780161916929L);
+        operation1.setOperationDescription("测试读写分离的操作");
+        boolean success = operationService.updateById(operation1);
+    }
+
+    @Test
+    public void testShading() {
+        boolean pass = operationService.save(new Operation().setOperationDescription("审批通过了").setAssessStatus(0));
+        boolean refuse = operationService.save(new Operation().setOperationDescription("审批没通过").setAssessStatus(1));
     }
 
     @Test

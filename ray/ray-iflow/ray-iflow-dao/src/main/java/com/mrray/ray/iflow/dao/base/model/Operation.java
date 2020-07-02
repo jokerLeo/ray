@@ -1,17 +1,16 @@
 package com.mrray.ray.iflow.dao.base.model;
 
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.FieldFill;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
- * 
- *
  * @author lyc
  */
 @Data
@@ -25,7 +24,7 @@ public class Operation implements Serializable {
      * 主键
      */
     @TableId("id")
-    @TableField(fill = FieldFill.INSERT)
+    //@TableField(fill = FieldFill.INSERT)
     private Long id;
 
     /**
