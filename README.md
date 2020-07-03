@@ -1,4 +1,4 @@
-# ray分布式敏捷开发
+# ray
 
 #### 介绍
 使用springboot+mybatisplus+dubbo的分布式敏捷开发框架
