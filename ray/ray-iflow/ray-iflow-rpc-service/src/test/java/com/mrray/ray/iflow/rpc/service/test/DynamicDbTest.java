@@ -1,4 +1,4 @@
-package com.mrray.ray.iflow.rpc.service.test.mapper;
+package com.mrray.ray.iflow.rpc.service.test;
 
 import com.mrray.ray.iflow.dao.base.model.Flow;
 import com.mrray.ray.iflow.dao.base.model.Operation;
@@ -48,7 +48,7 @@ public class DynamicDbTest {
     @Test
     public void testReadWriteSeparate() {
         Operation operation1 = operationService.getById(1278722780161916929L);
-        Operation operation2 = operationService.getById(1278722780161916929L);
+        Operation operation2 = operationService.getById(1278722786755362818L);
         operation1.setOperationDescription("测试读写分离的操作");
         boolean success = operationService.updateById(operation1);
     }

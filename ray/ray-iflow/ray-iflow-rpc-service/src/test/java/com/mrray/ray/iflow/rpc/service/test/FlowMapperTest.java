@@ -1,4 +1,4 @@
-package com.mrray.ray.iflow.rpc.service.test.mapper;
+package com.mrray.ray.iflow.rpc.service.test;
 
 import com.mrray.ray.iflow.dao.base.model.Flow;
 import com.mrray.ray.iflow.rpc.api.base.IFlowService;

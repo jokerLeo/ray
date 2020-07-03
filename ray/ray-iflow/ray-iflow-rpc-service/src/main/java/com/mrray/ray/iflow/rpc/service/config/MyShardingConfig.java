@@ -57,6 +57,20 @@ public class MyShardingConfig implements EnvironmentAware {
         return null == masterSlaveProperties.getMasterDataSourceName() ? ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingProperties.getShardingRuleConfiguration(), configMapProperties.getConfigMap(), propMapProperties.getProps()) : MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, masterSlaveProperties.getMasterSlaveRuleConfiguration(), configMapProperties.getConfigMap(), propMapProperties.getProps());
     }
 
+    //有需要可扩展，需要引入seata服务
+    //参考https://shardingsphere.apache.org/document/current/cn/user-manual/shardingsphere-jdbc/usage/transaction/seata/
+    //@Bean
+//    public SeataATShardingTransactionManager seataATShardingTransactionManager(final DataSource dataSource) {
+//        return new SeataATShardingTransactionManager();
+//    }
+
+    //有需要可扩展，需要引入Atomikos，
+    // 参考https://shardingsphere.apache.org/document/current/cn/user-manual/shardingsphere-jdbc/usage/transaction/atomikos/
+    //@Bean
+//    public XAShardingTransactionManager xaShardingTransactionManager(final DataSource dataSource) {
+//        return new XAShardingTransactionManager();
+//    }
+
     @Override
     public final void setEnvironment(Environment environment) {
         setDataSourceMap(environment);
