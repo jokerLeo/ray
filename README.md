@@ -1,7 +1,7 @@
 # ray
 
-#### 介绍
-使用springboot+mybatisplus+dubbo的分布式敏捷开发框架
+#### 使用springboot+mybatisplus+dubbo的分布式敏捷开发框架
+
 - 注：数据库分库分表使用依赖为
 ````
 <dependency>
