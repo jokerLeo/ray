@@ -32,14 +32,16 @@ spring:
       name: dubbo
       port: 20881
       status: server
-sharding:
-  jdbc:
+  #sharding配置
+  shardingsphere:
     dataSource:
       names: master0,master1,master0-slave1,master0-slave2,master1-slave1
       master0:
         type: com.alibaba.druid.pool.DruidDataSource
         url: jdbc:mysql://192.168.125.161:36005/iflow?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT
         username: root
+        #使用了自定义的AES对称加密，启动时需要添加启动参数-Denc.key=${自定义的key},用ray-common中的AESUtil加密
+        #如果不需要去除enc:前缀即可
         password: enc:jEhi6SfY38B7rIB9wrFZ1w==
         driver-class-name: com.mysql.cj.jdbc.Driver
       master0-slave1:
@@ -66,34 +68,39 @@ sharding:
         username: root
         password: enc:jEhi6SfY38B7rIB9wrFZ1w==
         driver-class-name: com.mysql.cj.jdbc.Driver
-    config:
-      # 分库分表
-      sharding:
-        tables:
-          operation:
-            #此处有坑，如果未配置主从则用此配置
-            #actual-data-nodes: master$->{0..1}.operation_$->{0..1}
-            #配置主从
-            actual-data-nodes: master_$->{0..1}.operation_$->{0..1}
-            database-strategy:
-              inline:
-                sharding-column: assess_status
-                algorithm-expression: master$->{assess_status%2}
-            table-strategy:
-              inline:
-                sharding-column: id
-                algorithm-expression: operation_$->{id % 2}
-            key-generator-column-name: id
-            key-generator-class-name: com.mrray.ray.common.sharding.SnowflakeShardingKeyGenerator
-        master-slave-rules:
-          master_0:
-            name: m02s
-            master-data-source-name: master0
-            slave-data-source-names: master0-slave1,master0-slave2
-          master_1:
-            name: m1
-            master-data-source-name: master1
-            slave-data-source-names: master1-slave1
+    #分库分表
+    sharding:
+      tables:
+        operation:
+          #此处有坑，如果配置了master-slave-rules则需要用其中配置的数据源
+          #actual-data-nodes: master$->{0..1}.operation_$->{0..1}
+          #表规则
+          actual-data-nodes: db_master_$->{0..1}.operation_$->{0..1}
+          #分库策略
+          database-strategy:
+            inline:
+              sharding-column: assess_status
+              #和上面同样的坑，如果配置了master-slave-rules则需要用其中配置的数据源，
+              #但是io.shardingsphere的starter确可以直接取datasource中的数据源
+              algorithm-expression: db_master_$->{assess_status%2}
+          #分表策略
+          table-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: operation_$->{id % 2}
+      #      default-key-generator:
+      #        type: SnowflakeShardingKeyGenerator
+      #        column: id
+      master-slave-rules:
+        db_master_0:
+          name: m0s2
+          master-data-source-name: master0
+          slave-data-source-names: master0-slave1,master0-slave2
+        db_master_1:
+          name: m1s1
+          master-data-source-name: master1
+          slave-data-source-names: master1-slave1
+
     props:
       sql:
         show: true

@@ -27,7 +27,7 @@ public class AESUtil {
      * 5.内容加密
      * 6.返回字符串
      */
-    public static String encode(String content, String myKey) {
+    private static String encode(String content, String myKey) {
         try {
             //1.构造密钥生成器，指定为AES算法,不区分大小写
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");

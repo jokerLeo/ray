@@ -1,7 +1,7 @@
 package com.mrray.ray.iflow.rpc.service;
 
 import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
-import io.shardingsphere.shardingjdbc.spring.boot.SpringBootConfiguration;
+import org.apache.shardingsphere.shardingjdbc.spring.boot.SpringBootConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;

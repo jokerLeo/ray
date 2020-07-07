@@ -49,7 +49,9 @@ public class DynamicDbTest {
     public void testReadWriteSeparate() {
         Operation operation1 = operationService.getById(1278722780161916929L);
         Operation operation2 = operationService.getById(1278722786755362818L);
-        operation1.setOperationDescription("测试读写分离的操作");
+        //更新时不能更新分库字段assess_status,否则会报异常
+        //更新是为null的字段不会被更新
+        operation1.setOperationDescription("测试更新数据").setAssessStatus(null);
         boolean success = operationService.updateById(operation1);
     }
 

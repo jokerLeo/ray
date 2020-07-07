@@ -43,8 +43,7 @@
         <zkclient.version>0.10</zkclient.version>
         <druid.starter.version>1.1.9</druid.starter.version>
         <mybatisplus.dynamic.version>3.1.0</mybatisplus.dynamic.version>
-        <shardingsphere.version>3.1.0</shardingsphere.version>
-        <shardingsphere.transaction.jar.version>4.1.0</shardingsphere.transaction.jar.version>
+        <shardingsphere.version>4.1.0</shardingsphere.version>
     </properties>
 
     <dependencyManagement>
@@ -88,27 +87,22 @@
             </dependency>
             <!--shardingsphere-->
             <dependency>
-                <groupId>io.shardingsphere</groupId>
+                <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-                <version>${shardingsphere.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.shardingsphere</groupId>
-                <artifactId>sharding-transaction-spring-boot-starter</artifactId>
                 <version>${shardingsphere.version}</version>
             </dependency>
             <!-- 使用 XA 事务时，需要引入此模块 -->
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-transaction-xa-core</artifactId>
-                <version>${shardingsphere.transaction.jar.version}</version>
+                <version>${shardingsphere.version}</version>
             </dependency>
 
             <!-- 使用 BASE 事务时，需要引入此模块 -->
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-transaction-base-seata-at</artifactId>
-                <version>${shardingsphere.transaction.jar.version}</version>
+                <version>${shardingsphere.version}</version>
             </dependency>
             <!-- Swagger -->
             <dependency>

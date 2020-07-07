@@ -38,6 +38,11 @@ public class Operation implements Serializable {
     private String username;
 
     /**
+     * 操作描述，根据业务人为设定
+     */
+    private String operationDescription;
+
+    /**
      * 操作状态
      */
     private Integer assessStatus;
@@ -56,11 +61,6 @@ public class Operation implements Serializable {
      * 参数json字符串
      */
     private String args;
-
-    /**
-     * 操作描述，根据业务人为设定
-     */
-    private String operationDescription;
 
     /**
      * 评估节点名称

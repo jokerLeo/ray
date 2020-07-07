@@ -49,7 +49,7 @@ public class EncryptPropertyPlaceholderConfigurer extends PropertySourcesPlaceho
 
         //针对sharding-jdbc datasource自定义解密的特殊处理
         //因为sharding-jdbc的datasource注入是从environment中获取propertySource,
-        // 不能直接通过PropertySourcesPlaceholderConfigurer定义的datasource获取
+        //不能直接通过PropertySourcesPlaceholderConfigurer定义的datasource获取
         MutablePropertySources sources = ((ConfigurableEnvironment) environment).getPropertySources();
         sources.addFirst(new PropertiesPropertySource(LOCAL_PROPERTIES_PROPERTY_SOURCE_NAME, mergedProperties));
 

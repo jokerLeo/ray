@@ -1,4 +1,4 @@
-package com.mrray.ray.common.sharding;
+package com.mrray.ray.iflow.rpc.service.config;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
