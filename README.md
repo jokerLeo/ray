@@ -1,7 +1,15 @@
 # ray
 
-#### 使用springboot+mybatisplus+dubbo的分布式敏捷开发框架
+#### 基于springboot的分布式敏捷开发框架,orm框架使用mybatisplus,rpc框架使用dubbo,数据库分库分表使用sharding-jdbc
 
+
+
+#### 功能说明
+基于springboot+mybatisplus+dubbo的分布式敏捷开发项目，包含以下功能：
+- 1.一键生成entity,dao,service,serviceImpl,controller,同时service满足dubbo配置，可供其他项目调用
+- 2.基于docker-compose的mysql主从一键化搭建，结构为一主两从和一主一从共五个数据库
+- 3.自定义springboot yml配置加密，不仅限于密码加密，不需要额外依赖，简单易用
+- 4.基于sharding-jdbc-spring-boot-starter的分库分表,读写分离和TransactionType.LOCAL类型的分布式事务
 - 注：数据库分库分表使用依赖为
 ````
 <dependency>
@@ -10,22 +18,6 @@
     <version>${shardingsphere.version}</version>
 </dependency>
 ````
-- 1.0分支数据库分库分表使用依赖为
-````
-<dependency>
-    <groupId>io.shardingsphere</groupId>
-    <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-    <version>${shardingsphere.version}</version>
-</dependency>
-````
-
-#### 功能说明
-基于springboot+mybatisplus+dubbo的分布式敏捷开发项目，包含以下功能：
-- 1.一键生成entity,dao,service,serviceImpl,controller,同时service满足dubbo配置，可供其他项目调用
-- 2.基于docker-compose的mysql主从一键化搭建，结构为一主两从和一主一从共五个数据库
-- 3.自定义springboot yml配置加密，不仅限于密码加密，不需要额外依赖，简单易用
-- 4.基于sharding-jdbc-spring-boot-starter的分库分表,读写分离和TransactionType.LOCAL类型的分布式事务
-
 
 #### 后端技术:
 技术 | 名称 | 官网
