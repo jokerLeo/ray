@@ -1,10 +1,9 @@
 package com.mrray.ray.common.constant;
 
 /**
- * Description: 全局常量类
+ * 全局常量类
  *
- * @author 然诺
- * @date 2019/8/28
+ * @author lyc
  */
 public class GlobalConstants {
     /**

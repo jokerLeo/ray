@@ -1,6 +1,9 @@
-package com.mrray.ray.iflow.rpc.service.config;
+package com.mrray.ray.common.sharding;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import com.google.common.base.Preconditions;
+import com.mrray.ray.common.SpringContextUtil;
 import org.apache.shardingsphere.core.yaml.swapper.MasterSlaveRuleConfigurationYamlSwapper;
 import org.apache.shardingsphere.core.yaml.swapper.ShardingRuleConfigurationYamlSwapper;
 import org.apache.shardingsphere.core.yaml.swapper.impl.ShadowRuleConfigurationYamlSwapper;
@@ -25,6 +28,7 @@ import org.apache.shardingsphere.transaction.spring.ShardingTransactionTypeScann
 import org.apache.shardingsphere.underlying.common.config.inline.InlineExpressionParser;
 import org.apache.shardingsphere.underlying.common.exception.ShardingSphereException;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -46,7 +50,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 自定义shardingsphere配置
+ * 自定义shardingsphere配置，实际拷贝自原配置文件，只做少量改动
  *
  * @author lyc
  **/
@@ -59,7 +63,7 @@ import java.util.Map;
         havingValue = "true",
         matchIfMissing = true
 )
-@AutoConfigureBefore({DataSourceAutoConfiguration.class})
+@AutoConfigureBefore({DruidDataSourceAutoConfigure.class, DataSourceAutoConfiguration.class})
 public class MyShardingsphereConfig implements EnvironmentAware {
     private final SpringBootShardingRuleConfigurationProperties shardingRule;
     private final SpringBootMasterSlaveRuleConfigurationProperties masterSlaveRule;
@@ -67,7 +71,19 @@ public class MyShardingsphereConfig implements EnvironmentAware {
     private final SpringBootShadowRuleConfigurationProperties shadowRule;
     private final SpringBootPropertiesConfigurationProperties props;
     private final Map<String, DataSource> dataSourceMap = new LinkedHashMap();
-    private final String jndiName = "jndi-name";
+    private static final String JNDI_NAME = "jndi-name";
+    private static final String DRUID_FILTER_PREFIX = "filters";
+
+    /**
+     * 配置属性自动填充
+     *
+     * @return
+     */
+    @Bean
+    @ConditionalOnMissingBean(SpringContextUtil.class)
+    public SpringContextUtil springContextUtil() {
+        return new SpringContextUtil();
+    }
 
     @Bean
     @Conditional({ShardingRuleCondition.class})
@@ -105,10 +121,12 @@ public class MyShardingsphereConfig implements EnvironmentAware {
         for (String dsName : getDataSourceNames(environment, prefix)) {
             try {
                 dataSourceMap.put(dsName, getDataSource(environment, prefix, dsName));
-            } catch (ReflectiveOperationException var6) {
-                throw new ShardingSphereException("Can't find datasource type!", var6);
-            } catch (NamingException var7) {
-                throw new ShardingSphereException("Can't find JNDI datasource!", var7);
+            } catch (ReflectiveOperationException reflectiveOperationException) {
+                throw new ShardingSphereException("Can't find datasource type!", reflectiveOperationException);
+            } catch (NamingException namingException) {
+                throw new ShardingSphereException("Can't find JNDI datasource!", namingException);
+            } catch (SQLException sqlException) {
+                throw new ShardingSphereException("set druidDatasource filters failed!", sqlException);
             }
         }
 
@@ -120,13 +138,20 @@ public class MyShardingsphereConfig implements EnvironmentAware {
         return null == standardEnv.getProperty(prefix + "name") ? (new InlineExpressionParser(standardEnv.getProperty(prefix + "names"))).splitAndEvaluate() : Collections.singletonList(standardEnv.getProperty(prefix + "name"));
     }
 
-    private DataSource getDataSource(Environment environment, String prefix, String dataSourceName) throws ReflectiveOperationException, NamingException {
+    private DataSource getDataSource(Environment environment, String prefix, String dataSourceName) throws ReflectiveOperationException, NamingException, SQLException {
         Map<String, Object> dataSourceProps = (Map) PropertyUtil.handle(environment, prefix + dataSourceName.trim(), Map.class);
         Preconditions.checkState(!dataSourceProps.isEmpty(), "Wrong datasource properties!");
-        if (dataSourceProps.containsKey("jndi-name")) {
-            return getJndiDataSource(dataSourceProps.get("jndi-name").toString());
+        if (dataSourceProps.containsKey(JNDI_NAME)) {
+            return getJndiDataSource(dataSourceProps.get(JNDI_NAME).toString());
         } else {
             DataSource result = DataSourceUtil.getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
+
+            //*******适配druidDataSource，添加filter,否则不能实现sql,防火墙等监控功能！！！**************
+            if (result instanceof DruidDataSource) {
+                if (dataSourceProps.get(DRUID_FILTER_PREFIX) != null) {
+                    ((DruidDataSource) result).setFilters(dataSourceProps.get(DRUID_FILTER_PREFIX).toString());
+                }
+            }
             DataSourcePropertiesSetterHolder.getDataSourcePropertiesSetterByType(dataSourceProps.get("type").toString()).ifPresent((dataSourcePropertiesSetter) -> {
                 dataSourcePropertiesSetter.propertiesSet(environment, prefix, dataSourceName, result);
             });

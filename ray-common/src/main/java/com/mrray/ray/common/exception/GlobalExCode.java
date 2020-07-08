@@ -9,8 +9,7 @@ package com.mrray.ray.common.exception;
  * 3.业务异常（5位）：前三位（模块）+ 后两位（序号）
  * ----------------------------------------------------------
  *
- * @author 然诺
- * @date 2019/9/26
+ * @author lyc
  */
 public enum GlobalExCode implements IExceptionCode {
     // 系统相关

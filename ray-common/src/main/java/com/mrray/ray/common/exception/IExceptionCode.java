@@ -4,8 +4,7 @@ package com.mrray.ray.common.exception;
  * 描述：异常错误枚举编码接口
  * 定义了异常枚举数据访问接口。自定义异常枚举类都需要实现此接口，以适应全局异常处理
  *
- * @author 然诺
- * @date 2019/8/28
+ * @author lyc
  */
 public interface IExceptionCode {
 

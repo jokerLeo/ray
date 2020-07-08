@@ -11,11 +11,11 @@
 
     <artifactId>ray-iflow-admin</artifactId>
 
-<dependencies>
-    <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>ray-iflow-rpc-service</artifactId>
-        <version>${project.version}</version>
-    </dependency>
-</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ray-iflow-rpc-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -1,4 +1,4 @@
-package com.mrray.ray.common.plugin;
+package com.mrray.ray.common.springboot;
 
 import com.mrray.ray.common.AESUtil;
 import org.apache.commons.lang3.StringUtils;

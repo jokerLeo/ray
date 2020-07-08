@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.util.Map;
 
 /**
@@ -27,7 +28,11 @@ public class ApplicationContextListener implements ApplicationListener<ContextRe
             log.info(">>>>> spring初始化完毕 <<<<<");
             Map<String, BaseMapper> baseMapperMap = contextRefreshedEvent.getApplicationContext().getBeansOfType(BaseMapper.class);
             for (Map.Entry entry : baseMapperMap.entrySet()) {
-                log.info("name:{},mapper:{}", entry.getKey(), entry.getValue().getClass().getSimpleName());
+                log.info("mapper init: {}", entry.getKey());
+            }
+            Map<String, DataSource> dataSourceMap = contextRefreshedEvent.getApplicationContext().getBeansOfType(DataSource.class);
+            for (Map.Entry entry : dataSourceMap.entrySet()) {
+                log.info("datasource init: {} ", entry.getKey());
             }
 
         }

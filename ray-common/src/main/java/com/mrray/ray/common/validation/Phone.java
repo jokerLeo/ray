@@ -8,7 +8,6 @@ import java.lang.annotation.*;
  * 手机号校验注解
  *
  * @author lyc
- * @create 2020-01-10 14:13
  **/
 
 @Constraint(validatedBy = PhoneValidator.class)

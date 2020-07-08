@@ -11,10 +11,9 @@ import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
- * Description：通用响应对象
+ * 通用响应对象
  *
- * @author 然诺
- * @date 2019/9/26
+ * @author lyc
  */
 @Getter
 @Setter
@@ -29,7 +28,7 @@ public class GlobalRet<T> implements Serializable {
 
     private ExRet error = null;
 
-    public GlobalRet() {
+    private GlobalRet() {
     }
 
     /**
@@ -37,7 +36,7 @@ public class GlobalRet<T> implements Serializable {
      *
      * @param data 结果集(泛型)
      */
-    public GlobalRet(T data) {
+    private GlobalRet(T data) {
         this.data = data;
     }
 
@@ -47,7 +46,7 @@ public class GlobalRet<T> implements Serializable {
         code = GlobalConstants.FAIL;
     }
 
-    public GlobalRet(IExceptionCode code) {
+    private GlobalRet(IExceptionCode code) {
         if (code != null) {
             this.code = code.getStatus();
             msg = code.getMessage();
@@ -112,7 +111,7 @@ public class GlobalRet<T> implements Serializable {
      * @return true/false
      */
     @JSONField(serialize = false)
-    public boolean isSuccess() {
+    private boolean isSuccess() {
         return GlobalConstants.SUCCESS == code;
     }
 

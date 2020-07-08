@@ -1,10 +1,9 @@
 package com.mrray.ray.common.exception;
 
 /**
- * Description：应用运行时异常 - 业务异常
+ * 应用运行时异常 - 业务异常
  *
- * @author 然诺
- * @date 2019/8/28
+ * @author lyc
  */
 public class BizException extends RuntimeException {
 
