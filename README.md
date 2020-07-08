@@ -10,6 +10,8 @@
 - 2.基于docker-compose的mysql主从一键化搭建，结构为一主两从和一主一从共五个数据库
 - 3.自定义springboot yml配置加密，不仅限于密码加密，不需要额外依赖，简单易用
 - 4.基于sharding-jdbc-spring-boot-starter的分库分表,读写分离和TransactionType.LOCAL类型的分布式事务
+- 5.自定义swagger自动配置，注解一键引入
+- 6.填sharding-jdbc-spring-boot-starter和druid-spring-boot-starter同时使用的坑，解决分库分表的同时使用druid所有的监控功能，包括sql监控和防火墙等
 - 注：数据库分库分表使用依赖为
 ````
 <dependency>
