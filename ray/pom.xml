@@ -29,7 +29,7 @@
         <org.apache.commons.lang>3.9</org.apache.commons.lang>
         <swagger.am.version>1.5.21</swagger.am.version>
         <swagger.bootstrap.ui>1.9.6</swagger.bootstrap.ui>
-        <poi.version>3.13</poi.version>
+        <poi.version>4.1.2</poi.version>
         <lombok.version>1.18.12</lombok.version>
         <raybaas.sdk.java>4.1.7-SNAPSHOT</raybaas.sdk.java>
         <mybatis-plus.version>3.1.0</mybatis-plus.version>
