@@ -34,7 +34,7 @@
         <raybaas.sdk.java>4.1.7-SNAPSHOT</raybaas.sdk.java>
         <mybatis-plus.version>3.1.0</mybatis-plus.version>
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
-        <httpclient.version>4.5.6</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <fastjson.version>1.2.56</fastjson.version>
         <pagehelper.version>1.2.5</pagehelper.version>
         <snakeyaml>1.25</snakeyaml>
